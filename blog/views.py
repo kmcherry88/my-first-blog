@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.utils import timezone
 from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
+from django.template.context import RequestContext
 
 # Create your views here.
 
@@ -40,3 +41,7 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+	
+def home(request):
+   context = RequestContext(request, {'request': request, 'user': request.user})
+   return render_to_response('blog/home.html', context_instance=context)
